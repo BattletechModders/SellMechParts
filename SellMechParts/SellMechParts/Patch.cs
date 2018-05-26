@@ -1,4 +1,5 @@
 ﻿using BattleTech;
+using BattleTech.Data;
 using Harmony;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,16 @@ namespace SellMechParts {
     public static class Shop_GetAllInventoryShopItems_Patch {
         static void Postfix(Shop __instance, ref List<ShopDefItem> __result) {
             try {
+                
                 SimGameState Sim = (SimGameState)ReflectionHelper.GetPrivateField(__instance, "Sim");
+                DataManager dataManager = Sim.DataManager;
                 List<ChassisDef> allInventoryMechDefs = (List<ChassisDef>)ReflectionHelper.InvokePrivateMethode(Sim, "GetAllInventoryMechParts", null);
                 foreach (ChassisDef chassisDef in allInventoryMechDefs) {
                     ShopDefItem shopDefItem = new ShopDefItem();
                     shopDefItem.ID = chassisDef.Description.Id.Replace("chassisdef", "mechdef");
+                    MechDef def =  Sim.DataManager.MechDefs.Get(shopDefItem.ID);
                     shopDefItem.Count = chassisDef.MechPartCount;
-                    float num = (float)chassisDef.Description.Cost;
+                    float num = (float)def.SimGameMechPartCost;
                     shopDefItem.SellCost = Mathf.FloorToInt(num * Sim.Constants.Finances.ShopSellModifier);
                     shopDefItem.Type = ShopItemType.MechPart;
                     __result.Add(shopDefItem);
