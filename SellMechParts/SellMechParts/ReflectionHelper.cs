@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using BattleTech;
 
 namespace SellMechParts {
     public static class ReflectionHelper {
