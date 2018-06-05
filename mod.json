@@ -1,0 +1,12 @@
+{
+    "Name": "SellMechParts",
+    "Enabled": true,
+
+    "Version": "0.1.0",
+    "Description": "Let's you sell your mech parts in any shop..",
+    "Author": "Morphyum",
+    "Website": "https://github.com/Morphyum/SellMechParts",
+    "Contact": "",
+	
+	"DLL": "SellMechParts.dll",
+}
